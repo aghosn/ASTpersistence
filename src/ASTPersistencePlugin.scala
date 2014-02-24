@@ -13,8 +13,23 @@ class ASTPersistencePlugin(global: Global) extends Plugin {
   val components = List[PluginComponent](Component) // Might change name
   
 
-  /* TODO : the plugin component, the new phase, and the traverser */
   private object Component extends PluginComponent{
+
+    val global : ASTPersistencePlugin.this.global.type = ASTPersistencePlugin.this.global
+    val runsAfter = ???
+    val phaseName = ASTPersistencePlugin.this.name
+    def newPhase(_prev : Phase) = new ASTPersisPhase(_prev)
+    
+    
+    class ASTPersisPhase (prev : Phase )extends StdPhase(prev){
+	  override def name = ASTPersistencePlugin.this.name
+	  
+	  /*See what is needed as argument*/
+	  def apply = ???
+	    
+	  
+    }
+	
 	
   }
 }
