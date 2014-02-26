@@ -1,4 +1,4 @@
 <plugin>
   <name>ASTPersistencePlugin</name>
-  <classname>ASTPersistencePlugin.scala</classname>
+  <classname>ASTPersistencePlugin</classname>
 </plugin>

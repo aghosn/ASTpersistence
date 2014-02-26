@@ -12,12 +12,15 @@ object BuildPlugin extends Build {
   lazy val root = Project(
     id = "root",
     base = file(".")) 
-    .configs(PluginTest) .settings ( inConfig(PluginTest)(Defaults.testSettings) : _*)
      /* TODO : will see later if we need other deps. */ 
      .settings (libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-compiler" % _)) 
      .settings (globalSettings: _*)
-
-  lazy val PluginTest = config("PluginTest") extend Test
+     
+  /* project for examples, compiling using the AST Persistence plugin directly */
+  lazy val examples = Project(
+    id = "examples",
+    base = file("examples/"))
+    .settings(globalSettings ++ testSettings: _*)
 
   /* Project settings */
 
@@ -26,7 +29,7 @@ object BuildPlugin extends Build {
     name := "ASTPersistencePlugin")
 
   /* Add the plugin to the compiler for compilation tests */
-  lazy val testSettings :  Seq[sbt.Def.Setting[sbt.Task[Seq[String]]]] = Seq(
+  lazy val testSettings = Seq(
     scalacOptions in Compile <++= (Keys.`package` in (root, Compile)) map { (jar: File) =>
        val addPlugin = "-Xplugin:" + jar.getAbsolutePath
        /* add plugin timestamp to compiler options to trigger recompile of

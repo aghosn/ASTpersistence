@@ -5,3 +5,5 @@
 /.cache
 /project/target
 /project/project
+/examples/target
+/examples/project
