@@ -17,23 +17,24 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
     import global._
     val global = ASTPersistencePlugin.this.global
     
-    override val runsAfter = List("erasure") 
+    override val runsAfter = List("typer") 
     val phaseName = ASTPersistencePlugin.this.name
     
     def newPhase(prev: Phase) = new ASTPersistencePhase(prev)
 
+    /** Additional phase of the compiler for the ASTPersistence */
     class ASTPersistencePhase(prev: Phase) extends StdPhase(prev) {
       override def name = ASTPersistencePlugin.this.name
       def apply(unit: CompilationUnit) {
-        println("Test")
-        //new ASTPersistenceTraverser(unit) traverse unit.body
+        new ASTPersistenceTraverser(unit) traverse unit.body
       }
     }
 
+    /** Traverser for the AST Persistence plugin */
     class ASTPersistenceTraverser(unit: CompilationUnit) extends Traverser {
       override def traverse(tree: Tree): Unit = tree match {
         /*TODO implement*/
-        case _ => ???
+        case _ => println(tree)
       }
     }
 
