@@ -1,4 +1,5 @@
 package messy
+
 import java.io.OutputStream
 import java.io.InputStream
 import java.io.FileOutputStream
@@ -7,6 +8,11 @@ import java.nio.ByteBuffer
 import java.io.DataInputStream
 import java.io.DataOutputStream
 
+/**
+ * @brief Simple Lzw compressor, with a non-modified implementation.
+ * 
+ * Used to give us some idea for the tree.
+ */
 object Lzw {
 
   /* Dictionaries for compression and decrompression */
@@ -58,7 +64,6 @@ object Lzw {
   def main(args: Array[String]) {
     
     if (args.length == 3) {
-        
 
       val in = new DataInputStream(new FileInputStream(args(0)))
       val cmp = new DataOutputStream(new FileOutputStream(args(1)))
@@ -69,6 +74,7 @@ object Lzw {
       val dec = new DataOutputStream(new FileOutputStream(args(2)))
 
       decompress(enc, dec)
-    }
+      
+    } else println("Not enougth argument for Lzw (need three files).")
   }
 }
