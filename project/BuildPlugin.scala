@@ -26,15 +26,14 @@ object BuildPlugin extends Build {
   lazy val messy = Project(
     id = "messy",
     base = file("messy/"))
-    .settings(globalSettings:_*)
+    .settings(globalSettings: _*)
 
   /* Project settings */
 
   /* General settings of the plugin */
   lazy val globalSettings = Seq(
     name := "ASTPersistencePlugin",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.2" % "test"
-)
+    libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.0" % "test")
 
   /* Add the plugin to the compiler for compilation tests */
   lazy val testSettings = Seq(
