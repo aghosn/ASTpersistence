@@ -42,6 +42,8 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
       override def name = ASTPersistencePlugin.this.name
       def apply(unit: CompilationUnit) {
         new ASTPersistenceTraverser(unit) traverse unit.body
+        //println(show(unit body))
+        //println(showRaw(unit.body, true, true, true, false))
       }
     }
 
@@ -71,23 +73,23 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
     class RelationExpander {
       
       /* TODO */
-      def genNameList(tree : Tree) : Unit = tree match {
-        
-        case x : NameTree => 
-          println(x.name)
-          tree.children foreach (genNameList(_))
-        
-        case _ => tree.children foreach (genNameList(_))
-      }
-      def generateBFS(tree: Tree) = {
-        def recBFS(tree: Tree, queue: Queue[Tree]) = queue.get(0) match {
+      def genNameList(tree : Tree) : Unit = generateBFS(tree){tree => tree match {
+        case x : NameTree => println(x.name); Nil
+        case _ => Nil
+      }}
+      
+      def generateBFS[T](tree: Tree)(f : Tree => T) = {
+        def recBFS(queue: Queue[Tree])(acc : List[T]) : List[T] = queue.get(0) match {
           case Some(node) => {
-            node.children.foreach(n => queue.enqueue(n))
+            var n_acc = acc
+            node.children.foreach{n => queue.enqueue(n); n_acc = f(n)::n_acc}
             queue.dequeue()
+            recBFS(queue)(n_acc)
           }
-          case None => println("End of queue");
+          case None => acc
         }
-        recBFS(tree, new Queue[Tree]())
+        
+        recBFS(Queue[Tree](tree))(Nil)
       }
     }
 
