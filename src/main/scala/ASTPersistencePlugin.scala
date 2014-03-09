@@ -48,9 +48,8 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
     /** Traverser for the AST Persistence plugin */
     class ASTPersistenceTraverser(unit: CompilationUnit) extends Traverser {
 
-      override def traverse(tree: Tree): Unit = ??? /* TODO */
-
-      def printRaw(tree: Tree): Unit = println(showRaw(tree, true, true, true, false))
+      override def traverse(tree: Tree): Unit = new RelationExpander().genNameList(tree) /* TODO */
+      
     }
 
     /* ***********************************************************************/
@@ -72,7 +71,14 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
     class RelationExpander {
       
       /* TODO */
-      
+      def genNameList(tree : Tree) : Unit = tree match {
+        
+        case x : NameTree => 
+          println(x.name)
+          tree.children foreach (genNameList(_))
+        
+        case _ => tree.children foreach (genNameList(_))
+      }
       def generateBFS(tree: Tree) = {
         def recBFS(tree: Tree, queue: Queue[Tree]) = queue.get(0) match {
           case Some(node) => {

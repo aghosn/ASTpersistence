@@ -2,8 +2,13 @@
 object Test {
 
   def main(args: Array[String]): Unit = {
-    val x = 4
-
+    println("Hello world")
+    val x = 44
+    end
+  }
+  def end() : Unit = {
+    
+    println("This is the end")
   }
 
 }
