@@ -74,14 +74,16 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
       /* TODO */
       
       def generateBFS(tree: Tree) = {
-        def recBFS(tree: Tree, queue: Queue[Tree]) = queue.get(0) match {
+        def recBFS(queue: Queue[Tree]):Unit = queue.get(0) match {
           case Some(node) => {
             node.children.foreach(n => queue.enqueue(n))
             queue.dequeue()
+            recBFS(queue)
           }
           case None => println("End of queue");
         }
-        recBFS(tree, new Queue[Tree]())
+        
+        recBFS(Queue[Tree](tree))
       }
     }
 
