@@ -17,7 +17,7 @@ object Lzw {
 
   /* Dictionaries for compression and decrompression */
 
-  val initialSize = 255 /* Initial size of the dictionary (ASCII), last one not included. */
+  val initialSize = 256 /* Initial size of the dictionary (ASCII), last one not included. */
 
   /* Creating the tables for the compression and decompression */
   var dictC = List range (0, initialSize) map (x => (List(x.toShort) -> x.toShort)) toMap
