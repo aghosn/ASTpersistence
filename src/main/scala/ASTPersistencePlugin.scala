@@ -7,7 +7,7 @@ import scala.tools.nsc.plugins.{ Plugin, PluginComponent }
  */
 class ASTPersistencePlugin(val global: Global) extends Plugin {
   import global._
-  
+
   val name = "AST persistence plugin"
   val description = """Saves the AST into the .class. 
 	For more information https://github.com/aghosn/ASTpersistence""""
@@ -15,11 +15,12 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
 
   private object Component extends PluginComponent {
     import global._
+
     val global = ASTPersistencePlugin.this.global
-    
-    override val runsAfter = List("typer") 
+
+    override val runsAfter = List("typer")
     val phaseName = ASTPersistencePlugin.this.name
-    
+
     def newPhase(prev: Phase) = new ASTPersistencePhase(prev)
 
     /** Additional phase of the compiler for the ASTPersistence */
@@ -32,9 +33,9 @@ class ASTPersistencePlugin(val global: Global) extends Plugin {
 
     /** Traverser for the AST Persistence plugin */
     class ASTPersistenceTraverser(unit: CompilationUnit) extends Traverser {
+
       override def traverse(tree: Tree): Unit = tree match {
-        /*TODO implement*/
-        case _ => println(tree)
+        case _ => println(showRaw(tree, true, true, true, false))
       }
     }
 
